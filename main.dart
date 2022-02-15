@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './questions.dart';
-import './answer.dart';
+import './quiz.dart';
+import 'result.dart';
 
 void main() => runApp(Myapp());
 
@@ -19,52 +19,81 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _questions = const [
+    {
+      'questionText': 'what is fav  color',
+      'answers': [
+        {
+          'text': 'black',
+          'score': 10
+        },
+        {
+          'text': 'red',
+          'score': 5
+        },
+        {
+          'text': 'green',
+          'score': 3
+        },
+        {
+          'text': 'white',
+          'score': 1
+        },
+      ],
+    },
+    {
+      'questionText': 'what is fav game',
+      'answers': [
+        {
+          'text': 'pubg',
+          'score': 1
+        },
+        {
+          'text': 'cod',
+          'score': 7
+        },
+        {
+          'text': 'minecraft',
+          'score': 5
+        },
+        {
+          'text': 'spintires',
+          'score': 10
+        },
+        'cod',
+        'minecraft',
+        'spintires'
+      ],
+    },
+  ];
   var _questionIndex = 0;
+  var _totalScore = 0;
+  void _resetQuiz() {
 
-  void _answerQuest() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuest(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
+    print(_questionIndex);
+    if (_questionIndex < _questions.length) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'questionText': 'what is fav  color',
-        'answers': [
-          'black',
-          'red',
-          'green',
-          'white'
-        ],
-      },
-      {
-        'questionText': 'what is fav game',
-        'answers': [
-          'pubg',
-          'cod',
-          'minecraft',
-          'spintires'
-        ],
-      },
-    ];
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Question(
-              questions[_questionIndex]['questionText'] as String,
-            ),
-            ...(questions[_questionIndex]['answers'] as List<String>).map((answer) {
-              return Answer(_answerQuest, answer);
-            }).toList()
-          ],
-        ),
-      ),
+      body: _questionIndex < _questions.length ? 
+      Quiz(answerQuest: _answerQuest, questionIndex: _questionIndex, questions: _questions)
+       : Result(_totalScore,_resetQuiz), 
     );
   }
 }
