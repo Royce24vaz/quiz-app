@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
           'text': 'white',
           'score': 1
         },
-      ],
+      ]
     },
     {
       'questionText': 'what is fav game',
@@ -60,10 +60,7 @@ class _HomeState extends State<Home> {
           'text': 'spintires',
           'score': 10
         },
-        'cod',
-        'minecraft',
-        'spintires'
-      ],
+      ]
     },
   ];
   var _questionIndex = 0;
